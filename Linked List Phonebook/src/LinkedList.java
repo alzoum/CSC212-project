@@ -1,67 +1,76 @@
-public class LinkedList<T>{
+
+public class LinkedList<T> {
+
 	private Node<T> head;
-	private Node<T> current;
 
 	public LinkedList() {
-		head = current = null;
+		head = null;
+	}
+	
+	public Node<T> getHead() {
+		return head;
+	}
+	
+	public void addContact(Contact<T> contact) {
+		Node<T> newNode = new Node<T>(contact);
+		if (head == null) {
+			head = newNode;
+		} else {
+			Node<T> current = head;
+			while (current.getNext() != null) {
+				current = current.getNext();
+			}
+			current.setNext(newNode);
+		}
 	}
 
-	public void findFirst() {
-		current = head;
-	}
-
-	public void findNext() {
-		current = current.getNext();
-	}
-
-	public void update(T val) {
-		current.setData(val);
-	}
-
-	public boolean full() {
+	public boolean deleteContact(Contact<T> contact) {
+		if (head == null) {
+			return false;
+		} else if (head.getContact().equals(contact)) {
+			head = head.getNext();
+			return true;
+		} else {
+			Node<T> current = head;
+			while (current.getNext() != null) {
+				if (current.getNext().getContact().equals(contact)) {
+					current.setNext(current.getNext().getNext());
+					return true;
+				}
+				current = current.getNext();
+			}
+		}
 		return false;
 	}
 
-	public boolean empty() {
-		return head == null;
-	}
+	public LinkedList searchContactsByCriteria(String searchCriteria, String searchValue) {
+		LinkedList searchResults = new LinkedList();
 
-	public boolean last() {
-		return current.getNext() == null;
-	}
+		Node<T> current = head;
 
-	public T retrieve() {
-		return current.getData();
-	}
+		while (current != null) {
+			Contact contact = current.getContact();
 
-	public void insert(T val) {
-		Node<T> tmp;
-		if (empty()) {
-			current = head = new Node<T>(val);
-		} else {
-			tmp = current.getNext();
-			current.setNext(new Node<T>(val));
+			if (searchCriteria.equalsIgnoreCase("name") && contact.getName().equalsIgnoreCase(searchValue)) {
+				searchResults.addContact(contact);
+			}
+			if (searchCriteria.equalsIgnoreCase("phone") && contact.getPhoneNumber().equals(searchValue)) {
+				searchResults.addContact(contact);
+			}
+			if (searchCriteria.equalsIgnoreCase("email") && contact.getEmailAddress().equalsIgnoreCase(searchValue)) {
+				searchResults.addContact(contact);
+			}
+			if (searchCriteria.equalsIgnoreCase("address") && contact.getAddress().equalsIgnoreCase(searchValue)) {
+				searchResults.addContact(contact);
+			}
+			if (searchCriteria.equalsIgnoreCase("birthday") && contact.getBirthday().equals(searchValue)) {
+				searchResults.addContact(contact);
+			}
+
 			current = current.getNext();
-			current.setNext(tmp);
-		}
-	}
-
-	public void remove() {
-		if (current == head) {
-			head = head.getNext();
-		} else {
-			Node<T> tmp = head;
-
-			while (tmp.getNext() != current)
-				tmp = tmp.getNext();
-
-			tmp.setNext(current.getNext());
 		}
 
-		if (current.getNext() == null)
-			current = head;
-		else
-			current = current.getNext();
+		return searchResults;
 	}
 
 }
