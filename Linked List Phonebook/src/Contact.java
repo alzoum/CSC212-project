@@ -1,7 +1,9 @@
 
-public class Contact<T> {
+public class Contact implements Comparable<Contact>{
 
-	
+	private LinkedList<Event> events;
+	private String firstName;
+	private String lastName;
 	private String name;
 	private String phoneNumber;
 	private String emailAddress;
@@ -9,6 +11,59 @@ public class Contact<T> {
 	private String birthday;
 	private String notes;
 	
+	public Contact(String name, String phoneNumber, String emailAddress, String address, String birthday, String notes) {
+        this.name = name;
+        this.phoneNumber = phoneNumber;
+        this.emailAddress = emailAddress;
+        this.address = address;
+        this.birthday = birthday;
+        this.notes = notes;
+        this.events = new LinkedList<>();
+        
+        String[] nameParts = name.split(" ");
+        
+        if(nameParts.length >= 2) {
+        firstName = nameParts[0];
+        lastName = nameParts[1];
+        }
+    }
+	
+	@Override
+    public int compareTo(Contact other) {
+       
+        int result = this.lastName.compareTo(other.getLastName());
+        if (result == 0) {
+            result = this.firstName.compareTo(other.getFirstName());
+        }
+        return result;
+    }
+
+	 public void addEvent(Event event) {
+	        events.insertEvent(event);
+	    }
+	
+	
+	  public LinkedList<Event> getEvents() {
+		  	return events;
+	    }
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	public String getFirstName() {
+		return firstName;
+	}
+	
+	public String getLastName() {
+		return lastName;
+	}
 	public String getName() {
 		return name;
 	}
@@ -44,6 +99,12 @@ public class Contact<T> {
 	}
 	public void setNotes(String notes) {
 		this.notes = notes;
+	}
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 	
 	

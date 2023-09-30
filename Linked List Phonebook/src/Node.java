@@ -1,17 +1,17 @@
 
 public class Node<T> {
-	 private Contact contact;
+		private T data;
 	    private Node next;
-
-	    public Node(Contact contact) {
-	        this.contact = contact;
+	  
+		public Node(T data) {
+	        this.data = data;
 	        this.next = null;
 	    }
-
-	    public Contact getContact() {
-	        return contact;
+	
+	    public T getData() {
+	        return data;
 	    }
-
+	    
 	    public Node getNext() {
 	        return next;
 	    }
