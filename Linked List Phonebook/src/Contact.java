@@ -39,6 +39,7 @@ public class Contact implements Comparable<Contact>{
     }
 
 	 public void addEvent(Event event) {
+
 	        events.insertEvent(event);
 	    }
 	

@@ -2,22 +2,25 @@ import java.util.Scanner;
 
 public class Phonebook {
 	private LinkedList<Contact> contacts;
+	private LinkedList<Event> events;
 
 	public Phonebook() {
 		contacts = new LinkedList<>();
+		events = new LinkedList<>();
 	}
 
 	public void deleteContact(String value) {
-		Node current = contacts.getHead();
-		if (!contacts.removeContact((Contact) current.getData())) {
-			System.out.println("No contacts found ");
+
+		Contact contact = contacts.search(value);
+		if (contact == null) {
+			System.out.println("No contacts found.");
 			return;
+		}
+
+		if (contacts.removeContact(contact)) {
+			System.out.println("Contact removed successfully!");
 		} else {
-			if (contacts.search(value) != null)
-				if (contacts.removeContact((Contact) current.getData())) {
-					System.out.println("Contact removed successfully!");
-					return;
-				}
+			System.out.println("Failed to remove contact.");
 		}
 	}
 
@@ -29,8 +32,8 @@ public class Phonebook {
 			return;
 		}
 
-		Node current = contacts.getHead();
-		while (current.getNext() != null) {
+		Node<Contact> current = contacts.getHead();
+		while (current != null) {
 			if (c.getName().equalsIgnoreCase(((Contact) current.getData()).getName())
 					|| c.getPhoneNumber().equalsIgnoreCase(((Contact) current.getData()).getPhoneNumber())) {
 				System.out.println("Contact already added!");
@@ -43,58 +46,56 @@ public class Phonebook {
 	}
 
 	public void searchContacts() {
-		Scanner scanner = new Scanner(System.in);
+	    Scanner scanner = new Scanner(System.in);
 
-		System.out.println("Enter search criteria:");
-		System.out.println("1. Name");
-		System.out.println("2. Phone Number");
-		System.out.println("3. Email Address");
-		System.out.println("4. Address");
-		System.out.println("5. Birthday");
+	    System.out.println("Enter search criteria:");
+	    System.out.println("1. Name");
+	    System.out.println("2. Phone Number");
+	    System.out.println("3. Email Address");
+	    System.out.println("4. Address");
+	    System.out.println("5. Birthday");
 
-		System.out.print("Enter your choice: ");
-		int choice = scanner.nextInt();
+	    System.out.print("Enter your choice: ");
+	    int choice = scanner.nextInt();
 
-		String searchValue;
-		switch (choice) {
-		case 1:
-			System.out.print("Enter the contact's name: ");
-            searchValue = scanner.nextLine(); // Use nextLine() instead of next()
-            LinkedList<Contact> nameSearchResults = contacts.searchContactsByCriteria("name", searchValue);
-            printSearchContacts(nameSearchResults);
-            break;
-		case 2:
-			System.out.print("Enter the contact's phoneNumber: ");
-			searchValue = scanner.next();
-			LinkedList<Contact> phoneSearchResults = contacts.searchContactsByCriteria("phone", searchValue);
-			printSearchContacts(phoneSearchResults);
-			break;
-		case 3:
-			System.out.print("Enter the contact's email: ");
-			searchValue = scanner.next();
-			LinkedList<Contact> emailSearchResults = contacts.searchContactsByCriteria("email", searchValue);
-			printSearchContacts(emailSearchResults);
-			break;
-		case 4:
-			System.out.print("Enter the contact's address: ");
-			searchValue = scanner.next();
-			LinkedList<Contact> addressSearchResults = contacts.searchContactsByCriteria("address", searchValue);
-			printSearchContacts(addressSearchResults);
-			break;
-		case 5:
-			System.out.print("Enter the contact's birthday: ");
-			searchValue = scanner.next();
-			LinkedList<Contact> birthdaySearchResults = contacts.searchContactsByCriteria("birthday", searchValue);
-			printSearchContacts(birthdaySearchResults);
-			break;
-		default:
-			System.out.println("Invalid choice. Please try again.");
-			break;
-		}
+	    scanner.nextLine(); // Consume the newline character
+
+	    String searchValue;
+	    switch (choice) {
+	        case 1:
+	            System.out.print("Enter the contact's name: ");
+	            searchValue = scanner.nextLine();
+	            printSearchContacts(contacts.searchContactsByCriteria("name", searchValue));
+	            break;
+	        case 2:
+	            System.out.print("Enter the contact's phone number: ");
+	            searchValue = scanner.nextLine();
+	            printSearchContacts(contacts.searchContactsByCriteria("phone", searchValue));
+	            break;
+	        case 3:
+	            System.out.print("Enter the contact's email address: ");
+	            searchValue = scanner.nextLine();
+	            printSearchContacts(contacts.searchContactsByCriteria("email", searchValue));
+	            break;
+	        case 4:
+	            System.out.print("Enter the contact's address: ");
+	            searchValue = scanner.nextLine();
+	            printSearchContacts(contacts.searchContactsByCriteria("address", searchValue));
+	            break;
+	        case 5:
+	            System.out.print("Enter the contact's birthday: ");
+	            searchValue = scanner.nextLine();
+	            printSearchContacts(contacts.searchContactsByCriteria("birthday", searchValue));
+	            break;
+	        default:
+	            System.out.println("Invalid choice.");
+	            break;
+	    }
 	}
-
-	public void printSearchContacts(LinkedList searchResults) {
-		Node current = searchResults.getHead();
+	
+	
+	private void printSearchContacts(LinkedList<Contact> searchResults) {
+		Node<Contact> current = searchResults.getHead();
 
 		if (current == null) {
 			System.out.println("No contacts found.");
@@ -117,8 +118,8 @@ public class Phonebook {
 	}
 
 	public void printContactsByFirstName(String firstName) {
-		Node current = contacts.getHead();
-		LinkedList list = new LinkedList();
+		Node<Contact> current = contacts.getHead();
+		LinkedList<Contact> list = new LinkedList();
 		while (current != null) {
 			if (firstName.equalsIgnoreCase(((Contact) current.getData()).getFirstName()))
 				list.insertContact((Contact) current.getData());
@@ -126,20 +127,18 @@ public class Phonebook {
 		}
 		printSearchContacts(list);
 	}
-	
-	
+
 	public void scheduleEvent(String title, String date, String time, String location, String contactName) {
-		contacts.scheduleEvent(title, date, time, location, contactName);
+		Contact eventUser = contacts.search(contactName);
+		events.scheduleEvent(title, date, time, location, eventUser);
+	}
+
+	public void printAllEvents() {
+		events.printAllEvents();;
 	}
 	
+	public void printEventDetail(String value) {
+		events.printEventDetails(value);;
+	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-
 }

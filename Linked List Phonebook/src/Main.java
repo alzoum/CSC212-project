@@ -14,24 +14,31 @@ public class Main {
 		book.addContact(c3);
 		book.addContact(c4);
 		
-		
-		String title;
-		String name;
-		String date;
-		String time;
-		String location;
-		System.out.println("Enter event title: ");
-		title = scanner.nextLine();
-		System.out.println("Enter contact name: ");
-		name = scanner.nextLine();
-		System.out.println("Enter event date and time (MM/DD/YYYY HH:MM): ");
-		String dateTime = scanner.nextLine();
-		String[] dateTimeParts = dateTime.split(" ");
-		date = dateTimeParts[0];
-		time = dateTimeParts[1];
-		System.out.println("Enter event location: ");
-		location = scanner.nextLine();
+	
+		String title="Launch with abdullah";
+		String name="Fahad Alohali";
+		String date="2/2/2";
+		String time="12:30";
+		String location="Riyadh";
+		String title1="Astro with Fahad";
+		String name1="Abdullah Alz";
+		String date1="2/2/2";
+		String time1="12:30";
+		String location1="Riyadh";
+		String title2="La with Fahad";
+		String name2="Abdullah Alz";
+		String date2="3/3/3";
+		String time2="12:30";
+		String location2="Riyadh";
 		book.scheduleEvent(title, date, time,location, name);
+		book.scheduleEvent(title1, date1, time1,location1, name1);
+		book.scheduleEvent(title2, date2, time2,location2, name2);
+		//book.printAllEvents();
+		
+		
+		book.deleteContact(name);
+		book.printAllEvents();
+		//book.printEventDetail("Launch with abdullah");
 		
 	}
 

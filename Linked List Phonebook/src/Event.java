@@ -62,6 +62,7 @@ public class Event {
 	        return "Event title: " + title + "\n" +
 	                "Contact name: " + eventUser.getName() + "\n" +
 	                "Event date and time (MM/DD/YYYY HH:MM): " + date + " " + time + "\n" +
-	                "Event location: " + location;
+	                "Event location: " + location + "\n" + 
+	                "-----------------------";
 	    }
 }
