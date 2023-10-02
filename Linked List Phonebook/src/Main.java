@@ -5,9 +5,9 @@ public class Main {
 		
 		Scanner scanner = new Scanner(System.in);
 		Contact c1 = new Contact("Fahad Alohali", "0502", "Fhd@gmail.com", "Alnafl", "10/1/2004", "Friend");
-		Contact c2 = new Contact("Abdullah Alz", "0", "v@gmail.com", "ss", "10/1/2003", "zz");
-		Contact c3 = new Contact("Abdullah Alg", "123", "v@gmail.com", "dd", "10/1/2002", "kkk");
-		Contact c4 = new Contact("Fahad Als", "02", "z@gmail.com", "yy", "10/1/2001", "vv");
+		Contact c2 = new Contact("Abdullah Alz", "0", "v@gmail.com", "Alnafl", "10/1/2003", "zz");
+		Contact c3 = new Contact("Abdullah Alg", "123", "v@gmail.com", "Alnafl", "10/1/2002", "kkk");
+		Contact c4 = new Contact("Fahad Als", "02", "z@gmail.com", "Alnafl", "10/1/2001", "vv");
 		Phonebook book = new Phonebook();
 		book.addContact(c1);
 		book.addContact(c2);
@@ -33,12 +33,9 @@ public class Main {
 		book.scheduleEvent(title, date, time,location, name);
 		book.scheduleEvent(title1, date1, time1,location1, name1);
 		book.scheduleEvent(title2, date2, time2,location2, name2);
-		//book.printAllEvents();
-		
-		
-		book.deleteContact(name);
 		book.printAllEvents();
-		//book.printEventDetail("Launch with abdullah");
+		book.printContactsByFirstName("fahad");
+		
 		
 	}
 

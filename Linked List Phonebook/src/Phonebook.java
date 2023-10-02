@@ -12,36 +12,41 @@ public class Phonebook {
 	public void deleteContact(String value) {
 
 		Contact contact = contacts.search(value);
+		Event event = events.search(value);
 		if (contact == null) {
 			System.out.println("No contacts found.");
 			return;
 		}
 
-		if (contacts.removeContact(contact)) {
+		if (contacts.remove(contact)) {
+			if(events.remove(event))
 			System.out.println("Contact removed successfully!");
+			
 		} else {
 			System.out.println("Failed to remove contact.");
 		}
+		
+		
 	}
 
 	public void addContact(Contact c) {
 
 		if (contacts.isEmpty()) {
-			contacts.insertContact(c);
+			contacts.insert(c);
 			System.out.println("Contact added successfully!");
 			return;
 		}
 
 		Node<Contact> current = contacts.getHead();
 		while (current != null) {
-			if (c.getName().equalsIgnoreCase(((Contact) current.getData()).getName())
-					|| c.getPhoneNumber().equalsIgnoreCase(((Contact) current.getData()).getPhoneNumber())) {
+			if (c.getName().equalsIgnoreCase(current.getData().getName())
+					|| c.getPhoneNumber().equalsIgnoreCase(current.getData().getPhoneNumber())) {
 				System.out.println("Contact already added!");
 				return;
 			}
 			current = current.getNext();
 		}
-		contacts.insertContact(c);
+		contacts.insert(c);
 		System.out.println("Contact added successfully!");
 	}
 
@@ -103,7 +108,7 @@ public class Phonebook {
 		}
 
 		while (current != null) {
-			Contact contact = (Contact) current.getData();
+			Contact contact = current.getData();
 			System.out.println("-----------------------");
 			System.out.println("Name: " + contact.getName());
 			System.out.println("Phone Number: " + contact.getPhoneNumber());
@@ -118,14 +123,16 @@ public class Phonebook {
 	}
 
 	public void printContactsByFirstName(String firstName) {
-		Node<Contact> current = contacts.getHead();
-		LinkedList<Contact> list = new LinkedList();
-		while (current != null) {
-			if (firstName.equalsIgnoreCase(((Contact) current.getData()).getFirstName()))
-				list.insertContact((Contact) current.getData());
-			current = current.getNext();
-		}
-		printSearchContacts(list);
+		    Node<Contact> current = contacts.getHead();
+		    LinkedList<Contact> list = new LinkedList<>();
+		    
+		    while (current != null) {
+		        if (firstName.equalsIgnoreCase(current.getData().getFirstName())) {
+		            list.insert(current.getData());
+		        }
+		        current = current.getNext();
+		    }
+		    printSearchContacts(list);
 	}
 
 	public void scheduleEvent(String title, String date, String time, String location, String contactName) {
@@ -138,7 +145,7 @@ public class Phonebook {
 	}
 	
 	public void printEventDetail(String value) {
-		events.printEventDetails(value);;
+		events.printEventDetails(value);
 	}
 	
 }
