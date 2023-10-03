@@ -51,7 +51,7 @@ public class LinkedList<T> {
 				newNode.setNext(head);
 				head = newNode;
 			} else {
-				Node<Event> current = head;
+				Node<Contact> current = head;
 				while (current.getNext() != null && ((Contact) e).getName()
 						.compareToIgnoreCase(((Contact) current.getNext().getData()).getName()) >= 0) {
 					current = current.getNext();
@@ -161,12 +161,12 @@ public class LinkedList<T> {
 		while (current != null) {
 			if (current.getData() instanceof Contact) {
 				Contact contact = (Contact) current.getData();
-				if (value.equals(contact.getName()) || value.equals(contact.getPhoneNumber())) {
+				if (value.equalsIgnoreCase(contact.getName()) || value.equalsIgnoreCase(contact.getPhoneNumber())) {
 					return current.getData();
 				}
 			} else if (current.getData() instanceof Event) {
 				Event event = (Event) current.getData();
-				if (value.equals(event.getTitle()) || value.equals(event.getEventUser().getName())) {
+				if (value.equalsIgnoreCase(event.getTitle()) || value.equalsIgnoreCase(event.getEventUser().getName())) {
 					return current.getData();
 				}
 			}
@@ -233,6 +233,7 @@ public class LinkedList<T> {
 			if (!hasConflict) {
 				insert((T) newEvent);
 				eventUser.addEvent(newEvent);
+				System.out.println("\nEvent scheduled successfully!\n");
 			} else {
 				System.out.println("Event scheduling conflict. Cannot schedule the event.");
 			}
