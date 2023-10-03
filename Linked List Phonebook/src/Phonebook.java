@@ -176,7 +176,7 @@ public class Phonebook {
 		switch (choice) {
 		case 1:
 			System.out.print("Enter the contact name:");
-			scanner.nextLine();
+			
 			value = scanner.nextLine();
 			events.printEventDetails(value);
 			break;
