@@ -40,22 +40,18 @@ public class Contact implements Comparable<Contact>{
 
 	 public void addEvent(Event event) {
 
-	        events.insertEvent(event);
+	        events.insert(event);
 	    }
 	
-	
+	 public boolean equals(Object e) {
+		 Contact contact = (Contact) e ;
+		 return contact.getName().equalsIgnoreCase(name) || contact.getFirstName().equalsIgnoreCase(firstName) || contact.getPhoneNumber().equalsIgnoreCase(phoneNumber) ;
+	 }
+	 
+	 
 	  public LinkedList<Event> getEvents() {
 		  	return events;
 	    }
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	
 	public String getFirstName() {
