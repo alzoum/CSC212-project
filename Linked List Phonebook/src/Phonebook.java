@@ -20,10 +20,14 @@ public class Phonebook {
 
 		if (contacts.remove(contact)) {
 			if (events.remove(event))
-				System.out.println("Contact removed successfully!");
+				while(event != null) {
+					events.remove(event);
+					event = events.search(value);
+				}
+				System.out.println("Contact removed successfully!\n");
 
 		} else {
-			System.out.println("Failed to remove contact.");
+			System.out.println("Failed to remove contact.\n");
 		}
 
 	}
@@ -239,25 +243,12 @@ public class Phonebook {
 					phonebook.searchContacts();
 					break;
 				case 3:
-					System.out.print("Enter contact's Name or Phonenumber:");
+					System.out.print("\nEnter contact's Name or Phonenumber:\n");
 					scanner.nextLine();
 					String value = scanner.nextLine();
 					phonebook.deleteContact(value);
 					break;
 				case 4:
-//					System.out.print("Enter event title:");
-//					scanner.nextLine();
-//					title = scanner.nextLine();
-//					System.out.print("Enter contact name: ");
-//					name = scanner.nextLine();
-//					System.out.print("Enter event date and time (MM/DD/YYYY HH:MM):");
-//					String x = scanner.nextLine();
-//					 String[] dateParts = x.split(" ");
-//					 date = dateParts[0];
-//				     time = dateParts[1];
-//					System.out.print("Enter event location:");
-//					location = scanner.nextLine();
-					//phonebook.scheduleEvent(title, date, time, location, name);
 					phonebook.scheduleEvent();
 					break;
 				case 5:
@@ -280,7 +271,7 @@ public class Phonebook {
 				default:
 					System.out.println("\n Invalid choice");
 			}
-		}while(input != 8);
+		}while(true);
 		
 	}
 	
