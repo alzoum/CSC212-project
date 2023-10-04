@@ -64,7 +64,8 @@ public class Event {
     
 	 @Override
 	    public String toString() {
-	        return "Event title: " + title + "\n" +
+	        return 	"-----------------------\n"+
+	        		"Event title: " + title + "\n" +
 	                "Contact name: " + eventUser.getName() + "\n" +
 	                "Event date and time (MM/DD/YYYY HH:MM): " + date + " " + time + "\n" +
 	                "Event location: " + location + "\n" + 

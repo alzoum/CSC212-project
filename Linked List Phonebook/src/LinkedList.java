@@ -178,15 +178,19 @@ public class LinkedList<T> {
 
 	public void printEventDetails(String value) {
 		Node<Event> current = head;
-
+		int counter = 0;
 		while (current != null) {
 			boolean title = ((Event) current.getData()).getTitle().equalsIgnoreCase(value);
 			boolean name = ((Event) current.getData()).getEventUser().getName().equalsIgnoreCase(value);
 			if (title || name) {
 				System.out.println(((Event) current.getData()).toString());
+				counter++;
 			}
 
 			current = current.getNext();
+		}
+		if (counter == 0) {
+			System.out.println("\nNo events found!\n");
 		}
 	}
 
@@ -235,11 +239,11 @@ public class LinkedList<T> {
 				eventUser.addEvent(newEvent);
 				System.out.println("\nEvent scheduled successfully!\n");
 			} else {
-				System.out.println("Event scheduling conflict. Cannot schedule the event.");
+				System.out.println("\nEvent scheduling conflict. Cannot schedule the event.\n");
 			}
 
 		} else {
-			System.out.println("Contact does not exist in the phonebook.");
+			System.out.println("\nContact does not exist in the phonebook.\n");
 		}
 	}
 	
@@ -247,7 +251,7 @@ public class LinkedList<T> {
 		Node<Event> current = head;
 
 		if (current == null) {
-			System.out.println("No events found.");
+			System.out.println("\nNo events found.\n");
 			return;
 		}
 

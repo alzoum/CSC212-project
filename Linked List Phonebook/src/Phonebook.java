@@ -19,12 +19,11 @@ public class Phonebook {
 		}
 
 		if (contacts.remove(contact)) {
-			if (events.remove(event))
 				while(event != null) {
 					events.remove(event);
 					event = events.search(value);
 				}
-				System.out.println("Contact removed successfully!\n");
+				System.out.println("\nContact removed successfully!\n");
 
 		} else {
 			System.out.println("Failed to remove contact.\n");
@@ -109,6 +108,12 @@ public class Phonebook {
 			return;
 		}
 		
+		if(current.getNext()==null) {
+			System.out.println("Contact found!");
+		}
+		else {
+			System.out.println("Contacts found!");
+		}
 		while (current != null) {
 			Contact contact = current.getData();
 			System.out.println("-----------------------");
@@ -172,26 +177,26 @@ public class Phonebook {
 		System.out.println("1.Contact name");
 		System.out.println("2.Event title");
 
-		System.out.print("\nEnter your choice:\n");
+		System.out.print("\nEnter your choice:");
 		int choice = scanner.nextInt();
 
 		scanner.nextLine(); // Consume the newline character
 
 		switch (choice) {
 		case 1:
-			System.out.print("Enter the contact name:");
+			System.out.print("\nEnter the contact name:");
 			
 			value = scanner.nextLine();
 			events.printEventDetails(value);
 			break;
 		case 2:
-			System.out.print("Enter the event title:");
+			System.out.print("\nEnter the event title:");
 			
 			value = scanner.nextLine();
 			events.printEventDetails(value);
 			break;
 		default:
-			System.out.println("Invalid choice.");
+			System.out.println("\nInvalid choice.\n");
 
 		}
 
@@ -243,7 +248,7 @@ public class Phonebook {
 					phonebook.searchContacts();
 					break;
 				case 3:
-					System.out.print("\nEnter contact's Name or Phonenumber:\n");
+					System.out.print("\nEnter contact's Name or Phonenumber:");
 					scanner.nextLine();
 					String value = scanner.nextLine();
 					phonebook.deleteContact(value);
