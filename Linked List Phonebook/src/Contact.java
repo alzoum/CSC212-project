@@ -45,7 +45,7 @@ public class Contact implements Comparable<Contact>{
 	
 	 public boolean equals(Object e) {
 		 Contact contact = (Contact) e ;
-		 return contact.getName().equalsIgnoreCase(name) || contact.getFirstName().equalsIgnoreCase(firstName) || contact.getPhoneNumber().equalsIgnoreCase(phoneNumber) ;
+		 return contact.getName().equalsIgnoreCase(name) || contact.getPhoneNumber().equalsIgnoreCase(phoneNumber) ;
 	 }
 	 
 	 

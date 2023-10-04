@@ -12,18 +12,19 @@ public class Phonebook {
 	public void deleteContact(String value) {
 
 		Contact contact = contacts.search(value);
-		Event event = events.search(value);
+
 		if (contact == null) {
 			System.out.println("\nNo contacts found.\n");
 			return;
 		}
 
 		if (contacts.remove(contact)) {
-				while(event != null) {
-					events.remove(event);
-					event = events.search(value);
-				}
-				System.out.println("\nContact removed successfully!\n");
+			Event event = events.search(value);
+			while (event != null) {
+				events.remove(event);
+				event = events.search(value);
+			}
+			System.out.println("\nContact removed successfully!\n");
 
 		} else {
 			System.out.println("Failed to remove contact.\n");
@@ -107,11 +108,10 @@ public class Phonebook {
 			System.out.println("\nNo contacts found.\n");
 			return;
 		}
-		
-		if(current.getNext()==null) {
+
+		if (current.getNext() == null) {
 			System.out.println("Contact found!");
-		}
-		else {
+		} else {
 			System.out.println("Contacts found!");
 		}
 		while (current != null) {
@@ -144,20 +144,20 @@ public class Phonebook {
 
 	public void scheduleEvent() {
 		Scanner scanner = new Scanner(System.in);
-		
-		System.out.print("Enter event title:");
-		
+
+		System.out.print("\nEnter event title:");
+
 		String title = scanner.nextLine();
-		
-		System.out.print("Enter contact name: ");
+
+		System.out.print("Enter contact name:");
 		String contactName = scanner.nextLine();
-		
+
 		System.out.print("Enter event date and time (MM/DD/YYYY HH:MM):");
 		String x = scanner.nextLine();
 		String[] dateParts = x.split(" ");
 		String date = dateParts[0];
 		String time = dateParts[1];
-		
+
 		System.out.print("Enter event location:");
 		String location = scanner.nextLine();
 
@@ -185,13 +185,13 @@ public class Phonebook {
 		switch (choice) {
 		case 1:
 			System.out.print("\nEnter the contact name:");
-			
+
 			value = scanner.nextLine();
 			events.printEventDetails(value);
 			break;
 		case 2:
 			System.out.print("\nEnter the event title:");
-			
+
 			value = scanner.nextLine();
 			events.printEventDetails(value);
 			break;
@@ -202,14 +202,11 @@ public class Phonebook {
 
 	}
 
-	
-	
-	
 	public static void main(String[] args) {
 		Phonebook phonebook = new Phonebook();
 		Scanner scanner = new Scanner(System.in);
 		int input;
-		String name,phonenumber,email,address,birthday,note;
+		String name, phonenumber, email, address, birthday, note;
 		System.out.println("Welcome to the Linked Tree Phonebook!");
 		do {
 			System.out.println("Please choose an option:");
@@ -221,86 +218,63 @@ public class Phonebook {
 			System.out.println("6.Print contact by first name");
 			System.out.println("7.Pring all events alphabetically");
 			System.out.println("8.Exit \n");
-			
+
 			System.out.print("Enter your choice:");
 			input = scanner.nextInt();
-			switch(input) {
-				case 1:
-					System.out.print("\nEnter the contact's name: ");
-					scanner.nextLine(); // Consume newline character
-					name = scanner.nextLine();
-					System.out.print("Enter the contact's phone number: ");
-					phonenumber = scanner.nextLine();
-					System.out.print("Enter the contact's email address: ");
-					email = scanner.nextLine();
-					System.out.print("Enter the contact's address: ");
-					address = scanner.nextLine();
-					System.out.print("Enter the contact's birthday: ");
-					birthday = scanner.nextLine();
-					System.out.print("Enter any notes for the contact: ");
-					note = scanner.nextLine();
-					Contact C = new Contact(name, phonenumber, email, address, birthday, note);
-					System.out.println();
-					phonebook.addContact(C);
-					System.out.println();
-					break;
-				case 2:
-					phonebook.searchContacts();
-					break;
-				case 3:
-					System.out.print("\nEnter contact's Name or Phonenumber:");
-					scanner.nextLine();
-					String value = scanner.nextLine();
-					phonebook.deleteContact(value);
-					break;
-				case 4:
-					phonebook.scheduleEvent();
-					break;
-				case 5:
-					phonebook.printEventDetail();
-					break;
-				case 6:
-					System.out.print("\nEnter the first name:");
-					scanner.nextLine();
-					name = scanner.nextLine();
-					phonebook.printContactsByFirstName(name);
-					break;
-				case 7:
-					phonebook.printAllEvents();
-					break;
-				case 8:
-					System.out.println("\nGoodbye!");
-					scanner.close();
-					System.exit(0);
-					break;
-				default:
-					System.out.println("\n Invalid choice");
+			switch (input) {
+			case 1:
+				System.out.print("\nEnter the contact's name:");
+				scanner.nextLine(); // Consume newline character
+				name = scanner.nextLine();
+				System.out.print("Enter the contact's phone number:");
+				phonenumber = scanner.nextLine();
+				System.out.print("Enter the contact's email address:");
+				email = scanner.nextLine();
+				System.out.print("Enter the contact's address:");
+				address = scanner.nextLine();
+				System.out.print("Enter the contact's birthday:");
+				birthday = scanner.nextLine();
+				System.out.print("Enter any notes for the contact:");
+				note = scanner.nextLine();
+				Contact C = new Contact(name, phonenumber, email, address, birthday, note);
+				System.out.println();
+				phonebook.addContact(C);
+				System.out.println();
+				break;
+			case 2:
+				phonebook.searchContacts();
+				break;
+			case 3:
+				System.out.print("\nEnter contact's Name or Phonenumber:");
+				scanner.nextLine();
+				String value = scanner.nextLine();
+				phonebook.deleteContact(value);
+				break;
+			case 4:
+				phonebook.scheduleEvent();
+				break;
+			case 5:
+				phonebook.printEventDetail();
+				break;
+			case 6:
+				System.out.print("\nEnter the first name:");
+				scanner.nextLine();
+				name = scanner.nextLine();
+				phonebook.printContactsByFirstName(name);
+				break;
+			case 7:
+				phonebook.printAllEvents();
+				break;
+			case 8:
+				System.out.println("\nGoodbye!");
+				scanner.close();
+				System.exit(0);
+				break;
+			default:
+				System.out.println("\n Invalid choice");
 			}
-		}while(true);
-		
+		} while (true);
+
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
+
 }
