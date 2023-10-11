@@ -7,7 +7,7 @@ public class LinkedList<T> {
 		head = null;
 	}
 
-	public Node getHead() {
+	public Node<T> getHead() {
 		return head;
 	}
 
@@ -20,9 +20,11 @@ public class LinkedList<T> {
 			Node<Event> newNode = new Node<>((Event) e);
 
 			if (head == null || ((Event) e).getTitle().compareToIgnoreCase(((Event) head.getData()).getTitle()) < 0) {
+				// If the list is empty or the event's title comes before the head's event title
+				// set the new node as the head
 				newNode.setNext(head);
 				head = newNode;
-			} else {
+			} else {// Find the appropriate position to insert the new node
 				Node<Event> current = head;
 				while (current.getNext() != null && ((Event) e).getTitle()
 						.compareToIgnoreCase(((Event) current.getNext().getData()).getTitle()) >= 0) {
@@ -34,13 +36,13 @@ public class LinkedList<T> {
 		} else if (e instanceof Contact) {
 			Node<Contact> newNode = new Node<>((Contact) e);
 
-			if (head == null || ((Contact) e).getName().compareToIgnoreCase(((Contact) head.getData()).getName()) < 0) {
+			if (head == null || ((Contact) e).getName().compareTo(((Contact) head.getData()).getName()) < 0) {
 				newNode.setNext(head);
 				head = newNode;
 			} else {
 				Node<Contact> current = head;
-				while (current.getNext() != null && ((Contact) e).getName()
-						.compareToIgnoreCase(((Contact) current.getNext().getData()).getName()) >= 0) {
+				while (current.getNext() != null
+						&& ((Contact) e).getName().compareTo(((Contact) current.getNext().getData()).getName()) >= 0) {
 					current = current.getNext();
 				}
 				newNode.setNext(current.getNext());
@@ -109,7 +111,7 @@ public class LinkedList<T> {
 		return searchResults;
 	}
 
-	public T search(String value) {
+	public T search(String value) {// value might be the Name or the Phone number of the contact
 		Node<T> current = head;
 
 		while (current != null) {
@@ -159,7 +161,8 @@ public class LinkedList<T> {
 			while (current != null) {
 				if (current.getData() instanceof Event) {
 					Event existingEvent = (Event) current.getData();
-					if (existingEvent.getEventUser().equals(eventUser)
+					if (existingEvent.getEventUser().equals(eventUser)// Check for scheduling conflicts by comparing
+																		// event details
 							&& existingEvent.getDate().equals(newEvent.getDate())
 							&& existingEvent.getTime().equals(newEvent.getTime())) {
 
@@ -173,7 +176,6 @@ public class LinkedList<T> {
 
 			if (!hasConflict) {
 				insert((T) newEvent);
-				eventUser.addEvent(newEvent);
 				System.out.println("\nEvent scheduled successfully!\n");
 			} else {
 				System.out.println("\nEvent scheduling conflict. Cannot schedule the event.\n");
