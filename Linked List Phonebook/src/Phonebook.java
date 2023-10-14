@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Phonebook {
@@ -151,22 +152,37 @@ public class Phonebook {
 
 	public void scheduleEvent() {
 		Scanner scanner = new Scanner(System.in);
-
+		String title,contactName,date,time,location;
 		System.out.print("\nEnter event title:");
 
-		String title = scanner.nextLine();
+		 title = scanner.nextLine();
 
 		System.out.print("Enter contact name:");
-		String contactName = scanner.nextLine();
+		 contactName = scanner.nextLine();
 
 		System.out.print("Enter event date and time (MM/DD/YYYY HH:MM):");
 		String x = scanner.nextLine();
 		String[] dateParts = x.split(" ");
-		String date = dateParts[0];
-		String time = dateParts[1];
-
+	try {
+		 date = dateParts[0];
+		 time = dateParts[1];
+	}catch(ArrayIndexOutOfBoundsException e) {
+		System.out.println("Please put a space between date and time");
+		System.out.print("Enter event date and time (MM/DD/YYYY HH:MM):");
+		 x = scanner.nextLine();
+		 dateParts = x.split(" ");
+		 if(x.length() >= 2) {
+		 date = dateParts[0];
+		 time = dateParts[1];
+		 }
+		 else {
+			 System.out.println("\nWrong input!\n");
+			 return;
+		 }
+	}
+		
 		System.out.print("Enter event location:");
-		String location = scanner.nextLine();
+		 location = scanner.nextLine();
 
 		Contact eventUser = contacts.search(contactName);// Searches for the contact with the specified name
 		events.scheduleEvent(title, date, time, location, eventUser);// Schedules the event with the provided details
@@ -212,10 +228,11 @@ public class Phonebook {
 	public static void main(String[] args) {
 		Phonebook phonebook = new Phonebook();
 		Scanner scanner = new Scanner(System.in);
-		int input;
+		int input = 0;
 		String name, phonenumber, email, address, birthday, note;
 		System.out.println("Welcome to the Linked Tree Phonebook!");
 		do {
+			try {
 			System.out.println("Please choose an option:");
 			System.out.println("1.Add a contact");
 			System.out.println("2.Search for a contact");
@@ -227,7 +244,10 @@ public class Phonebook {
 			System.out.println("8.Exit \n");
 
 			System.out.print("Enter your choice:");
+			
 			input = scanner.nextInt();
+			
+			
 			switch (input) {
 			case 1:
 				System.out.print("\nEnter the contact's name:");
@@ -280,6 +300,12 @@ public class Phonebook {
 			default:
 				System.out.println("\n Invalid choice");
 			}
+			}catch(InputMismatchException e) {
+				scanner.nextLine();
+				System.out.println("\nPlease enter a number from the list!\n");
+				continue;
+			}
+			
 		} while (true);
 
 	}
