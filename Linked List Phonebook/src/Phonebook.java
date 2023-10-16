@@ -10,7 +10,7 @@ public class Phonebook {
 		events = new LinkedList<>();
 	}
 
-	public void deleteContact(String value) {
+	public void deleteContact(String value) { //value is either name or phone number of the contact
 
 		Contact contact = contacts.search(value);
 
