@@ -111,7 +111,7 @@ public class LinkedList<T> {
 		return searchResults;
 	}
 
-	public T search(String value) {// value might be the Name or the Phone number of the contact
+	public T search(String value) {// value might be the Name or the Phone number of the contact or event title
 		Node<T> current = head;
 
 		while (current != null) {
