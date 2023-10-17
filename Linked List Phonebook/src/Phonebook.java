@@ -10,7 +10,7 @@ public class Phonebook {
 		events = new LinkedList<>();
 	}
 
-	public void deleteContact(String value) {
+	public void deleteContact(String value) { //value is either name or phone number of the contact
 
 		Contact contact = contacts.search(value);
 
@@ -166,6 +166,7 @@ public class Phonebook {
 	}catch(ArrayIndexOutOfBoundsException e) {
 			 System.out.println("\nWrong input!\n");
 			 return;
+
 	}
 		
 		System.out.print("Enter event location:");

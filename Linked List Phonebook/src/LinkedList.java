@@ -119,6 +119,7 @@ public class LinkedList<T> {
 	}
 
 	public T search(String value) {// value might be the Name or the Phone number of the contact or the event title
+
 		Node<T> current = head;
 
 		while (current != null) {

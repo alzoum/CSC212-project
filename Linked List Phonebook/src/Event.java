@@ -2,26 +2,25 @@
 public class Event {
 
 	private String title;
-    private String date;
-    private String time;
-    private String location;
-    private Contact eventUser;
-    
-    public Event(String title, String date,String time, String location, Contact eventUser) {
-        this.title = title;
-        this.date = date;
-        this.time = time;
-        this.location = location;
-        this.eventUser = eventUser;
-    }
+	private String date;
+	private String time;
+	private String location;
+	private Contact eventUser;
 
-    
-    
-    public boolean equals(Object e) {
-		Event event = (Event) e ;
-		 return event.getTitle().equalsIgnoreCase(title) || event.eventUser.getName().equalsIgnoreCase(eventUser.getName());
-	 }
-    
+	public Event(String title, String date, String time, String location, Contact eventUser) {
+		this.title = title;
+		this.date = date;
+		this.time = time;
+		this.location = location;
+		this.eventUser = eventUser;
+	}
+
+	public boolean equals(Object e) {
+		Event event = (Event) e;
+		return event.getTitle().equalsIgnoreCase(title)
+				|| event.eventUser.getName().equalsIgnoreCase(eventUser.getName());
+	}
+
 	public String getTitle() {
 		return title;
 	}
@@ -61,14 +60,11 @@ public class Event {
 	public void setEventUser(Contact eventUser) {
 		this.eventUser = eventUser;
 	}
-    
-	 @Override
-	    public String toString() {
-	        return 	"-----------------------\n"+
-	        		"Event title: " + title + "\n" +
-	                "Contact name: " + eventUser.getName() + "\n" +
-	                "Event date and time (MM/DD/YYYY HH:MM): " + date + " " + time + "\n" +
-	                "Event location: " + location + "\n" + 
-	                "-----------------------";
-	    }
+
+	@Override
+	public String toString() {
+		return "-----------------------\n" + "Event title: " + title + "\n" + "Contact name: " + eventUser.getName()
+				+ "\n" + "Event date and time (MM/DD/YYYY HH:MM): " + date + " " + time + "\n" + "Event location: "
+				+ location + "\n" + "-----------------------";
+	}
 }
