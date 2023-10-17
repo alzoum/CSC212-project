@@ -21,10 +21,7 @@ public class Phonebook {
 
 		if (contacts.remove(contact)) { // Removes the contact from the contacts list
 			Event event = events.search(value); // Searches and removes any associated events with the contact
-			while (event != null) {
-				events.remove(event);
-				event = events.search(value);
-			}
+			events.remove(event);
 			System.out.println("\nContact removed successfully!\n");
 
 		} else {
@@ -167,18 +164,9 @@ public class Phonebook {
 		 date = dateParts[0];
 		 time = dateParts[1];
 	}catch(ArrayIndexOutOfBoundsException e) {
-		System.out.println("Please put a space between date and time");
-		System.out.print("Enter event date and time (MM/DD/YYYY HH:MM):");
-		 x = scanner.nextLine();
-		 dateParts = x.split(" ");
-		 if(x.length() >= 2) {
-		 date = dateParts[0];
-		 time = dateParts[1];
-		 }
-		 else {
 			 System.out.println("\nWrong input!\n");
 			 return;
-		 }
+
 	}
 		
 		System.out.print("Enter event location:");
