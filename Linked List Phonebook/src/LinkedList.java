@@ -1,4 +1,3 @@
-
 public class LinkedList<T> {
 
 	private Node head;
@@ -7,7 +6,7 @@ public class LinkedList<T> {
 		head = null;
 	}
 
-	public Node getHead() {
+	public Node<T> getHead() {
 		return head;
 	}
 
@@ -20,9 +19,11 @@ public class LinkedList<T> {
 			Node<Event> newNode = new Node<>((Event) e);
 
 			if (head == null || ((Event) e).getTitle().compareToIgnoreCase(((Event) head.getData()).getTitle()) < 0) {
+				// If the list is empty or the event's title comes before the head's event title
+				// set the new node as the head
 				newNode.setNext(head);
 				head = newNode;
-			} else {
+			} else {// Find the appropriate position to insert the new node
 				Node<Event> current = head;
 				while (current.getNext() != null && ((Event) e).getTitle()
 						.compareToIgnoreCase(((Event) current.getNext().getData()).getTitle()) >= 0) {
@@ -34,13 +35,13 @@ public class LinkedList<T> {
 		} else if (e instanceof Contact) {
 			Node<Contact> newNode = new Node<>((Contact) e);
 
-			if (head == null || ((Contact) e).getName().compareToIgnoreCase(((Contact) head.getData()).getName()) < 0) {
+			if (head == null || ((Contact) e).getName().compareTo(((Contact) head.getData()).getName()) < 0) {
 				newNode.setNext(head);
 				head = newNode;
 			} else {
 				Node<Contact> current = head;
-				while (current.getNext() != null && ((Contact) e).getName()
-						.compareToIgnoreCase(((Contact) current.getNext().getData()).getName()) >= 0) {
+				while (current.getNext() != null
+						&& ((Contact) e).getName().compareTo(((Contact) current.getNext().getData()).getName()) >= 0) {
 					current = current.getNext();
 				}
 				newNode.setNext(current.getNext());
@@ -52,30 +53,38 @@ public class LinkedList<T> {
 	public boolean remove(T e) {
 		if (isEmpty()) {
 			return false;
-		} else if (head.getData().equals(e)) {
-			head = head.getNext();
-			return true;
 		} else {
 			if (e instanceof Contact) {
-				Node<Contact> current = head;
-				while (current != null) {
-					if (current.getNext().getData().equals((Contact) e)) {
-						current.setNext(current.getNext().getNext());
-						return true;
+				if (head.getData().equals(e)) {
+					head = head.getNext();
+					return true;
+				} else {
+					Node<Contact> current = head;
+					while (current != null) {
+						if (current.getNext().getData().equals((Contact) e)) {
+							current.setNext(current.getNext().getNext());
+							return true;
+						}
+						current = current.getNext();
 					}
-					current = current.getNext();
 				}
 			} else if (e instanceof Event) {
 				Node<Event> current = head;
-				while (current != null) {
-					if (current.getNext().getData().equals((Event) e)) {
+				boolean eventDeleted = false; // Flag to track if any events were deleted
+				while (current.getNext() != null) {
+					if (((Event) current.getNext().getData()).getEventUser().equals(((Event) e).getEventUser())) {
 						current.setNext(current.getNext().getNext());
-						return true;
+						eventDeleted = true; // Set the flag to true if an event was deleted
+					} else {
+						current = current.getNext();
 					}
-					current = current.getNext();
 				}
+				if (head.getData().equals(e))// to delete the last node exist
+					head = head.getNext();
+				return eventDeleted; // Return the flag indicating if any events were deleted
 			}
 		}
+
 		return false;
 	}
 
@@ -109,7 +118,7 @@ public class LinkedList<T> {
 		return searchResults;
 	}
 
-	public T search(String value) {
+	public T search(String value) {// value might be the Name or the Phone number of the contact or the event title
 		Node<T> current = head;
 
 		while (current != null) {
@@ -138,6 +147,7 @@ public class LinkedList<T> {
 			boolean title = ((Event) current.getData()).getTitle().equalsIgnoreCase(value);
 			boolean name = ((Event) current.getData()).getEventUser().getName().equalsIgnoreCase(value);
 			if (title || name) {
+				System.out.println("\n Event found!");
 				System.out.println(((Event) current.getData()).toString());
 				counter++;
 			}
@@ -159,7 +169,8 @@ public class LinkedList<T> {
 			while (current != null) {
 				if (current.getData() instanceof Event) {
 					Event existingEvent = (Event) current.getData();
-					if (existingEvent.getEventUser().equals(eventUser)
+					if (existingEvent.getEventUser().equals(eventUser)// Check for scheduling conflicts by comparing
+																		// event details
 							&& existingEvent.getDate().equals(newEvent.getDate())
 							&& existingEvent.getTime().equals(newEvent.getTime())) {
 
@@ -173,7 +184,6 @@ public class LinkedList<T> {
 
 			if (!hasConflict) {
 				insert((T) newEvent);
-				eventUser.addEvent(newEvent);
 				System.out.println("\nEvent scheduled successfully!\n");
 			} else {
 				System.out.println("\nEvent scheduling conflict. Cannot schedule the event.\n");

@@ -1,3 +1,4 @@
+import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class Phonebook {
@@ -18,12 +19,9 @@ public class Phonebook {
 			return;
 		}
 
-		if (contacts.remove(contact)) {
-			Event event = events.search(value);
-			while (event != null) {
-				events.remove(event);
-				event = events.search(value);
-			}
+		if (contacts.remove(contact)) { // Removes the contact from the contacts list
+			Event event = events.search(value); // Searches and removes any associated events with the contact
+			events.remove(event);
 			System.out.println("\nContact removed successfully!\n");
 
 		} else {
@@ -40,7 +38,7 @@ public class Phonebook {
 			return;
 		}
 
-		Node<Contact> current = contacts.getHead();
+		Node<Contact> current = contacts.getHead(); // Traverses the contacts list to check for duplicates
 		while (current != null) {
 			if (c.getName().equalsIgnoreCase(current.getData().getName())
 					|| c.getPhoneNumber().equalsIgnoreCase(current.getData().getPhoneNumber())) {
@@ -73,27 +71,32 @@ public class Phonebook {
 		case 1:
 			System.out.print("\nEnter the contact's name:");
 			searchValue = scanner.nextLine();
-			printSearchContacts(contacts.searchContactsByCriteria("name", searchValue));
+			printSearchContacts(contacts.searchContactsByCriteria("name", searchValue));// Searches and prints contacts
+																						// by name
 			break;
 		case 2:
 			System.out.print("Enter the contact's phone number:");
 			searchValue = scanner.nextLine();
-			printSearchContacts(contacts.searchContactsByCriteria("phone", searchValue));
+			printSearchContacts(contacts.searchContactsByCriteria("phone", searchValue));// Searches and prints contacts
+																							// by phone
 			break;
 		case 3:
 			System.out.print("Enter the contact's email address:");
 			searchValue = scanner.nextLine();
-			printSearchContacts(contacts.searchContactsByCriteria("email", searchValue));
+			printSearchContacts(contacts.searchContactsByCriteria("email", searchValue));// Searches and prints contacts
+																							// by email
 			break;
 		case 4:
 			System.out.print("Enter the contact's address:");
 			searchValue = scanner.nextLine();
-			printSearchContacts(contacts.searchContactsByCriteria("address", searchValue));
+			printSearchContacts(contacts.searchContactsByCriteria("address", searchValue));// Searches and prints
+																							// contacts by address
 			break;
 		case 5:
 			System.out.print("Enter the contact's birthday:");
 			searchValue = scanner.nextLine();
-			printSearchContacts(contacts.searchContactsByCriteria("birthday", searchValue));
+			printSearchContacts(contacts.searchContactsByCriteria("birthday", searchValue));// Searches and prints
+																							// contacts by birthday
 			break;
 		default:
 			System.out.println("Invalid choice.");
@@ -109,12 +112,13 @@ public class Phonebook {
 			return;
 		}
 
-		if (current.getNext() == null) {
+		if (current.getNext() == null) {// if the list from the parameter contains one contact print "Contact found"
 			System.out.println("Contact found!");
 		} else {
-			System.out.println("Contacts found!");
+			System.out.println("Contacts found!");// if the list from the parameter contains more than one contact print
+													// "Contacts found"
 		}
-		while (current != null) {
+		while (current != null) { // Prints the searchResults list
 			Contact contact = current.getData();
 			System.out.println("-----------------------");
 			System.out.println("Name: " + contact.getName());
@@ -133,9 +137,10 @@ public class Phonebook {
 		Node<Contact> current = contacts.getHead();
 		LinkedList<Contact> list = new LinkedList<>();
 
-		while (current != null) {
+		while (current != null) { // Traverses the contacts list to find contacts with matching first names
 			if (firstName.equalsIgnoreCase(current.getData().getFirstName())) {
-				list.insert(current.getData());
+				list.insert(current.getData());// Inserts the matching contacts into a new list to send them to the
+												// print method "printSearchContacts"
 			}
 			current = current.getNext();
 		}
@@ -144,29 +149,34 @@ public class Phonebook {
 
 	public void scheduleEvent() {
 		Scanner scanner = new Scanner(System.in);
-
+		String title,contactName,date,time,location;
 		System.out.print("\nEnter event title:");
 
-		String title = scanner.nextLine();
+		 title = scanner.nextLine();
 
 		System.out.print("Enter contact name:");
-		String contactName = scanner.nextLine();
+		 contactName = scanner.nextLine();
 
 		System.out.print("Enter event date and time (MM/DD/YYYY HH:MM):");
 		String x = scanner.nextLine();
 		String[] dateParts = x.split(" ");
-		String date = dateParts[0];
-		String time = dateParts[1];
-
+	try {
+		 date = dateParts[0];
+		 time = dateParts[1];
+	}catch(ArrayIndexOutOfBoundsException e) {
+			 System.out.println("\nWrong input!\n");
+			 return;
+	}
+		
 		System.out.print("Enter event location:");
-		String location = scanner.nextLine();
+		 location = scanner.nextLine();
 
-		Contact eventUser = contacts.search(contactName);
-		events.scheduleEvent(title, date, time, location, eventUser);
+		Contact eventUser = contacts.search(contactName);// Searches for the contact with the specified name
+		events.scheduleEvent(title, date, time, location, eventUser);// Schedules the event with the provided details
 	}
 
 	public void printAllEvents() {
-		events.printAllEvents();
+		events.printAllEvents();// Prints all the events in the events list
 		;
 	}
 
@@ -187,13 +197,13 @@ public class Phonebook {
 			System.out.print("\nEnter the contact name:");
 
 			value = scanner.nextLine();
-			events.printEventDetails(value);
+			events.printEventDetails(value);// Prints event details for the specified contact name
 			break;
 		case 2:
 			System.out.print("\nEnter the event title:");
 
 			value = scanner.nextLine();
-			events.printEventDetails(value);
+			events.printEventDetails(value);// Prints event details for the specified event title
 			break;
 		default:
 			System.out.println("\nInvalid choice.\n");
@@ -205,10 +215,11 @@ public class Phonebook {
 	public static void main(String[] args) {
 		Phonebook phonebook = new Phonebook();
 		Scanner scanner = new Scanner(System.in);
-		int input;
+		int input = 0;
 		String name, phonenumber, email, address, birthday, note;
 		System.out.println("Welcome to the Linked Tree Phonebook!");
 		do {
+			try {
 			System.out.println("Please choose an option:");
 			System.out.println("1.Add a contact");
 			System.out.println("2.Search for a contact");
@@ -220,7 +231,10 @@ public class Phonebook {
 			System.out.println("8.Exit \n");
 
 			System.out.print("Enter your choice:");
+			
 			input = scanner.nextInt();
+			
+			
 			switch (input) {
 			case 1:
 				System.out.print("\nEnter the contact's name:");
@@ -273,6 +287,12 @@ public class Phonebook {
 			default:
 				System.out.println("\n Invalid choice");
 			}
+			}catch(InputMismatchException e) {
+				scanner.nextLine();
+				System.out.println("\nPlease enter a number from the list!\n");
+				continue;
+			}
+			
 		} while (true);
 
 	}
